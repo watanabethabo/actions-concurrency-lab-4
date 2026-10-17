@@ -1,0 +1,21 @@
+name: overlimit-20
+on:
+  workflow_dispatch:
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        n: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - shell: bash
+        run: |
+          echo "START n=${{ matrix.n }} t=$(date -u +%H:%M:%S)"
+          node test/sum.test.js
+          sleep 45
+          echo "END n=${{ matrix.n }}"
